@@ -1,7 +1,6 @@
 package com.bridgelabz.empwage;
-
 public class EmployeeWage {
-    public static void main(String[] args) {
+    public void employeeWage(){
         final int empWagePerHrs = 20;
         final int WORKING_DAYS_IN_MONTH = 20;
         final int MAX_HRS_IN_MONTH = 100;
@@ -29,5 +28,9 @@ public class EmployeeWage {
         }
         int totalEmployeeWage = totalEmployeeHrs * empWagePerHrs;
         System.out.println("Total Employee Wage " + totalEmployeeWage);
+    }
+    public static void main(String[] args) {
+        EmployeeWage employeeWage = new EmployeeWage();
+        employeeWage.employeeWage();
     }
 }
