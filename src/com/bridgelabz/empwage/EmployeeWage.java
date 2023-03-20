@@ -1,38 +1,72 @@
 package com.bridgelabz.empwage;
 
+import java.util.Random;
+
 public class EmployeeWage {
-    public static  final int IS_PART_TIME = 1;
-    public static  final int IS_FULL_TIME = 2;
-    public static int employeeWage(String company, int empRatePerHr, int numOfWorkingDays, int maxHrsPerMonth) {
-        System.out.println("Welcome to Employee Wage Program");
-        int empHrs = 0;
-        int totalEmployeeHrs = 0;
-        int totalWorkingDays = 0;
-        while (totalEmployeeHrs <= maxHrsPerMonth &&
-                totalWorkingDays < numOfWorkingDays) {
-            totalWorkingDays++;
-            int empCheck = (int) Math.floor(Math.random() * 10) % 3;
+    private String company;
+    static int EMP_RATE_PER_HOUR;
+    static int WORKING_DAYS_PER_MONTH;
+    static int MAX_WORKING_HOURS;
+    private int totalEmpWage;
+
+
+    //Constructor for the class EmployeeWage
+    public EmployeeWage(String company, int EMP_RATE_PER_HOUR, int workingDaysPerMonth, int maxWorkingHours) {
+        this.company = company;
+        this.EMP_RATE_PER_HOUR = EMP_RATE_PER_HOUR;
+        this.WORKING_DAYS_PER_MONTH = workingDaysPerMonth;
+        this.MAX_WORKING_HOURS = maxWorkingHours;
+    }
+
+    //Computation of company wage
+    public void companyWage() {
+        System.out.printf("%s Employee Wage details: ", company).println();
+
+        //local variables
+        int empWage = 0, totalWage = 0, workingHours = 0, empHours = 0;
+        Random random = new Random();
+
+        //Calculating the total wage per month using loops
+        for (int day = 1; day <= WORKING_DAYS_PER_MONTH && workingHours < MAX_WORKING_HOURS; day++) {
+            //Max Working hours should be 100.
+            int empCheck = random.nextInt(3);
             switch (empCheck) {
-                case IS_FULL_TIME:
-                    empHrs = 8;
+                case 1:
+                    System.out.printf("Day %d: Employee is Present for full day.", day).println();
+                    empHours = 8;
                     break;
-                case IS_PART_TIME:
-                    empHrs = 4;
+                case 2:
+                    System.out.printf("Day %d: Employee worked for half day.", day).println();
+                    empHours = 4;
                     break;
                 default:
-                    empHrs = 0;
+                    System.out.printf("Day %d: Employee is Absent.", day).println();
+                    empHours = 0;
+                    break;
             }
-            totalEmployeeHrs = totalEmployeeHrs + empHrs;
-            System.out.println("Day:" + totalWorkingDays + " EmpHour: " + empHrs);
+            empWage = empHours * EMP_RATE_PER_HOUR;
+            System.out.printf("Worked:" + empHours + "hours, Wage:" + empWage).println("\n");
+            totalWage += empWage;
+            workingHours += empHours; //Max Working Hours is 100, loop terminates if it is above 100.
         }
-        int totalEmployeeWage = totalEmployeeHrs * empRatePerHr;
-        System.out.println("Total Employee Wage For Company : " + company + " is: " + totalEmployeeWage);
-        return totalEmployeeWage;
+        totalEmpWage = workingHours * EMP_RATE_PER_HOUR;
+        System.out.printf("The Total wage of " + company + "for this month:  " + totalWage).println();
+        System.out.printf("Total hours of working for " + company + ": " + workingHours).println();
+        System.out.println();
+    }
+
+    //overriding the toString() method
+    public String toString() {
+        return "Total wage  for the Company " + company + " is: " + totalEmpWage;
     }
 
     public static void main(String[] args) {
-        EmployeeWage employeeWage = new EmployeeWage();
-        employeeWage.employeeWage("TCS",10,4,20);
-        employeeWage.employeeWage("Wipro",200,4,30);
+        System.out.println("Welcome to Employee Wage Computation. \n");
+        EmployeeWage company1 = new EmployeeWage("TATA", 20, 20, 100);
+        company1.companyWage();
+        EmployeeWage company2 = new EmployeeWage("HDFC", 15, 26, 200);
+        company2.companyWage();
+        System.out.println(company1);
+        System.out.println(company2);
     }
 }
